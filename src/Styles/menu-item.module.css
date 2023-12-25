@@ -1,0 +1,15 @@
+.item{
+    padding: 10px 0 10px 6px;
+}
+
+#selected{
+    background-color: rgb(20, 176, 233);
+}
+
+.arrow {
+    height: 1rem;
+    margin-left: 0.5rem; /* Adjust this margin as needed */
+    vertical-align: middle; /* Align vertically */
+  }
+  
+  

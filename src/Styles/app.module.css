@@ -1,0 +1,29 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,body{
+  width: 100%;
+  height: 100%;
+  font-family: 'Geneva', 'San Francisco', Verdana, sans-serif;
+}
+
+::selection{
+  visibility: hidden;
+}
+
+/* Ipod Container */
+.ipodContainer{
+  padding: 10px;
+  height: 80vh;
+  width: 350px;
+  background-color: #D9D9D8;
+  box-shadow: inset  0 0 20px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

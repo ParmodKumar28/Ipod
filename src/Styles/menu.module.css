@@ -1,0 +1,13 @@
+.menuContainer{
+    padding: 1rem;
+    height: 100%;
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.menu{
+    list-style: none;
+}
