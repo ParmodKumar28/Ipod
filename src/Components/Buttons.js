@@ -11,43 +11,60 @@ export default class Buttons extends Component{
         this.rollerRef = React.createRef();
     }
 
+    // Component updating here.
     componentDidUpdate() {
-        const {menu, handleActiveMenuItemRotation} = this.props;
-
-        if(menu.menuVisible)
-        {
-        // Accessing the roller DOM element using the ref.
-        const rollerElement = this.rollerRef.current;
+        const { menu, handleActiveMenuItemRotation } = this.props;
+        const musicMenu = menu.musicMenu;
     
-        // Region where zingtouch will work.
-        const activeRegion = new ZingTouch.Region(rollerElement);
+        if (menu.menuVisible) {
+          // Accessing the roller DOM element using the ref.
+          const rollerElement = this.rollerRef.current;
     
-        let initialDistance = 0; // Track initial distance for rotation direction
-        let selectedIndex = menu.activeMenuItem;
+          // Region where zingtouch will work.
+          const activeRegion = new ZingTouch.Region(rollerElement);
     
-        activeRegion.bind(rollerElement, "rotate", (event) => {
-              const rotation = Math.abs(event.detail.distanceFromOrigin - initialDistance);
-              const rotationThreshold = 45; // Set your preferred threshold
-        
-              if (rotation > rotationThreshold) {
-                if (initialDistance < event.detail.distanceFromOrigin) {
-                  // Clockwise rotation
-                  selectedIndex = (selectedIndex + 1) % menu.menuItems.length;
-                } else {
-                  // Anti-clockwise rotation
-                  selectedIndex = (selectedIndex - 1 + menu.menuItems.length) % menu.menuItems.length;
-                }
-                handleActiveMenuItemRotation(selectedIndex);
-                initialDistance = event.detail.distanceFromOrigin; // Update initial distance
+          let initialDistance = 0; // Track initial distance for rotation direction
+          let selectedIndex =
+            menu.menuType === "Menu"
+              ? menu.activeMenuItem
+              : musicMenu.activeMenuItem;
+    
+          // Binding rotate event to the roller element
+          activeRegion.bind(rollerElement, "rotate", (event) => {
+            const rotation = Math.abs(event.detail.distanceFromOrigin - initialDistance);
+            const rotationThreshold = 45; // Set your preferred threshold
+    
+            if (rotation > rotationThreshold) {
+              if (initialDistance < event.detail.distanceFromOrigin) {
+                // Clockwise rotation
+                selectedIndex =
+                  (selectedIndex + 1) %
+                  (menu.menuType === "Menu"
+                    ? menu.menuItems.length
+                    : musicMenu.menuItems.length);
+              } else {
+                // Anti-clockwise rotation
+                selectedIndex =
+                  (selectedIndex - 1 +
+                    (menu.menuType === "Menu"
+                      ? menu.menuItems.length
+                      : musicMenu.menuItems.length)) %
+                  (menu.menuType === "Menu"
+                    ? menu.menuItems.length
+                    : musicMenu.menuItems.length);
               }
-        });
-    }
-    }
+              handleActiveMenuItemRotation(selectedIndex);
+              initialDistance = event.detail.distanceFromOrigin; // Update initial distance
+            }
+          });
+        }
+      }
 
     // Rendering Component
     render()
     {
-        const {handleMenuBtnClick, handleOkBtnClick, handlePrevBtn, handleNextBtn} = this.props;
+        // Props
+        const {handleMenuBtnClick, handleOkBtnClick, handlePrevBtn, handleNextBtn, togglePlayPause, songs} = this.props;
 
         // Returnning JSX
         return (
@@ -60,8 +77,11 @@ export default class Buttons extends Component{
                 <div className={styles.next} onClick={handleNextBtn}>
                 <img src="https://cdn-icons-png.flaticon.com/128/4211/4211373.png"/>
                 </div>
-                <div className={styles.play}>
-                <img src="https://cdn-icons-png.flaticon.com/128/4211/4211344.png"/>
+                <div className={styles.play} onClick={togglePlayPause}>
+                <img src={songs.isPlaying ? "https://cdn-icons-png.flaticon.com/128/4211/4211362.png"
+                 : "https://cdn-icons-png.flaticon.com/128/4211/4211344.png"}
+                alt={songs.isPlaying ? "Pause Icon" : "Play Icon"}
+                />
                 </div>
                 <div className={styles.prev} onClick={handlePrevBtn}>
                 <img src="https://cdn-icons-png.flaticon.com/128/4211/4211379.png"/>

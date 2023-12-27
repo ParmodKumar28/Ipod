@@ -1,0 +1,39 @@
+/* AllSongs.module.css */
+.AllSongsContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .AllSongsContainer img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .AllSongsContainer h3 {
+    margin: 5px 0;
+    font-size: 1.5em;
+  }
+  
+  .AllSongsContainer p {
+    margin: 5px 0;
+    color: #888;
+    font-size: 1em;
+  }
+  
+  .AllSongsContainer audio {
+    width: 100%;
+    margin-top: 20px;
+  }
+  

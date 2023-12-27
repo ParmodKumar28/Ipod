@@ -2,12 +2,13 @@
 import { Component } from "react";
 import styles from "../Styles/menu-item.module.css";
 
-// Class component for displaying the menu in the screen to control and use features of the ipod.
+// Class component for displaying the menu-Item On the screen to control and use features of the ipod.
 export default class MenuItem extends Component{
 
     // Rendering Component
     render()
     {
+        // Props
         const {item, activeMenuItem, index} = this.props;
         // Returnning JSX
         return (

@@ -15,6 +15,9 @@ import wallpaper6 from "./Assets/Wallpapers/wallpaper-6.avif";
 import wallpaper7 from "./Assets/Wallpapers/wallpaper-7.avif";
 import wallpaper8 from "./Assets/Wallpapers/wallpaper-8.avif";
 
+// Importing Songs
+import allSongsData from "./songs-data";
+
 // Class component app parent of all the components is here.
 class App extends Component{
   // Constructor to create states.
@@ -31,24 +34,31 @@ class App extends Component{
           index : -1,
           menuItem: ""
         },
-        menuVisible: false,  
-      },
-
-      // Music menu data
-      musicMenu: {
+        menuVisible: false,
+        menuType : "Menu",
+        // Music menu data
+        musicMenu: {
         menuItems: ["All Songs", "Artists", "Playlists"],
-        activeMenuOption: -1,
+        activeMenuItem: -1,
         selectedMenuItem: { //Item on which we clicked ok and want to use
             index : -1,
             menuItem: ""
           },
         menuVisible: false,
-      },
-
+      }, 
+    },
+    
       // Wallpapers Data
       coverflow: {
         wallpapers: [wallpaper1, wallpaper2, wallpaper3, wallpaper4, wallpaper5, wallpaper6, wallpaper7, wallpaper8],
         activeWallpaper: 1,
+      },
+
+      // All Songs
+      songs: {
+        allSongs: allSongsData,
+        currentSongIndex: 0,
+        isPlaying: false,
       }
     }
   }
@@ -59,10 +69,9 @@ class App extends Component{
 
     if(menu.menuVisible)
     {
-      menu.activeMenuItem = index;
+      menu.menuType === "Menu" ? menu.activeMenuItem = index : menu.musicMenu.activeMenuItem = index;
     }
 
-    console.log("Active item" , menu.activeMenuItem);
     // Updating state
     this.setState({
       menu
@@ -73,7 +82,6 @@ class App extends Component{
   handleMenuBtnClick = () => {
     let {menu} = this.state;
     menu.menuVisible = !menu.menuVisible;
-    console.log(`In menu click menu visible: ${menu.menuVisible}`);
 
     // Updating state
     this.setState({
@@ -83,20 +91,26 @@ class App extends Component{
 
   // Handling the ok button click.
   handleOkBtnClick = () => {
-    const {menu, musicMenu} = this.state;
+    const {menu} = this.state;
+    const musicMenu = menu.musicMenu;
     if(menu.menuVisible)
     {
-      menu.selectedMenuItem.index = menu.activeMenuItem;
-      menu.selectedMenuItem.menuItem = menu.menuItems[menu.activeMenuItem];
+      menu.menuType === "Menu" ? (menu.selectedMenuItem.index = menu.activeMenuItem) : (musicMenu.selectedMenuItem.index = musicMenu.activeMenuItem);
+      menu.menuType === "Menu" ? (menu.selectedMenuItem.menuItem = menu.menuItems[menu.activeMenuItem]) : (musicMenu.selectedMenuItem.menuItem = musicMenu.menuItems[musicMenu.activeMenuItem]);
       menu.menuVisible = !menu.menuVisible;
+      musicMenu.menuVisible = !musicMenu.menuVisible;
     }
     if(menu.selectedMenuItem.menuItem === "Music")
     {
       menu.menuVisible = true;
-      musicMenu.menuVisible = true;
+      menu.musicMenu.menuVisible = true;
+      menu.menuType = "Music";
     }
-    
-    console.log(`menu visible: ${menu.menuVisible} musicMenuVisible: ${musicMenu.menuVisible} activeMenuItem: ${menu.activeMenuItem} selectedMenuItem: ${menu.selectedMenuItem.menuItem}`);
+    if(menu.menuType === "Music" && menu.menuVisible === true && musicMenu.selectedMenuItem.index >= 0)
+    {
+      menu.menuVisible = false;
+      menu.musicMenu.menuVisible = false;
+    }
 
     // Updating state
     this.setState({
@@ -106,28 +120,61 @@ class App extends Component{
 
   // Handling previous button click here.
   handlePrevBtn = () => {
-    const { menu, coverflow } = this.state;
+    const { menu, coverflow, songs } = this.state;
+    const musicMenu = menu.musicMenu;
+  
     if (menu.activeMenuItem >= 0 && menu.menuItems[menu.activeMenuItem] === "Coverflow") {
       coverflow.activeWallpaper = coverflow.activeWallpaper > 0 ? coverflow.activeWallpaper - 1 : coverflow.activeWallpaper;
       this.setState({ coverflow });
     }
-  }
   
-  // Handling next button click here.
-  handleNextBtn = () => {
-    const { menu, coverflow } = this.state;
-    if (menu.activeMenuItem >= 0 && menu.menuItems[menu.activeMenuItem] === "Coverflow") {
-      coverflow.activeWallpaper = coverflow.activeWallpaper < coverflow.wallpapers.length - 1 ? coverflow.activeWallpaper + 1 : coverflow.activeWallpaper;
-      this.setState({ coverflow });
+    if (menu.menuType === "Music") {
+      if (musicMenu.selectedMenuItem.menuItem === "All Songs") {
+        const prevIndex = songs.currentSongIndex > 0 ? songs.currentSongIndex - 1 : songs.allSongs.length - 1;
+        songs.currentSongIndex = prevIndex;
+        this.setState({ songs });
+      } else {
+        menu.menuType = "Menu";
+        this.setState({ menu });
+      }
     }
+  };
+  
+
+// Handling next button click here.
+handleNextBtn = () => {
+  const { menu, songs } = this.state;
+  const musicMenu = menu.musicMenu;
+
+  if (menu.activeMenuItem >= 0 && menu.menuItems[menu.activeMenuItem] === "Coverflow") {
+    const { coverflow } = this.state;
+    coverflow.activeWallpaper = coverflow.activeWallpaper < coverflow.wallpapers.length - 1
+      ? coverflow.activeWallpaper + 1
+      : coverflow.activeWallpaper;
+    this.setState({ coverflow });
   }
 
+  if (menu.menuType === "Music" && musicMenu.selectedMenuItem.menuItem === "All Songs") {
+    const nextIndex = (songs.currentSongIndex + 1) % songs.allSongs.length;
+    songs.currentSongIndex = nextIndex;
+    this.setState({ songs });
+  }
+};
 
+// Function to play/pause the audio
+togglePlayPause = () => {
+  const { menu, songs } = this.state;
+  if(menu.musicMenu.selectedMenuItem.menuItem === "All Songs")
+  {
+    songs.isPlaying = !songs.isPlaying;
+    this.setState({ songs });
+  }
+};
 
   // Calling render function here.
   render()
   {
-    const {menu, musicMenu, coverflow} = this.state;
+    const {menu,coverflow, songs, togglePlayPause} = this.state;
 
     // Returning Jsx
     return (
@@ -136,17 +183,19 @@ class App extends Component{
       <div className={styles.ipodContainer}>
         <Screen 
           menu={menu}
-          musicMenu={musicMenu}
           coverflow={coverflow}
+          songs={songs}
           />
 
         <Buttons 
-          menu={musicMenu.menuVisible ? musicMenu : menu}
+          menu={menu}
+          songs={songs}
           handleActiveMenuItemRotation={this.handleActiveMenuItemRotation} 
           handleMenuBtnClick={this.handleMenuBtnClick}
           handleOkBtnClick={this.handleOkBtnClick}
           handlePrevBtn={this.handlePrevBtn}
-          handleNextBtn={this.handleNextBtn} 
+          handleNextBtn={this.handleNextBtn}
+          togglePlayPause={this.togglePlayPause}
           />
       </div>
       </>

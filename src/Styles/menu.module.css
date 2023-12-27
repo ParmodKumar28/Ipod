@@ -13,3 +13,12 @@
 .menu{
     list-style: none;
 }
+
+p{
+    font-size: 1rem;
+    color: grey;
+}
+
+.back{
+    height: 1rem;
+}

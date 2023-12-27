@@ -8,8 +8,8 @@ export default class Coverflow extends Component{
     // Rendering Component
     render()
     {
+        // Props
         const {coverflow, selectedMenuItem} = this.props;
-
         const activeWallpaper = coverflow.activeWallpaper;
 
         // Returnning JSX

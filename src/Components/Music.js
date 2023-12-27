@@ -8,13 +8,14 @@ export default class Music extends Component{
     // Rendering Component
     render()
     {
-        const {musicMenu} = this.props;
+        // Props
+        const {menu} = this.props;
 
         // Returnning JSX
         return (
             <>
                 <Menu
-                    menu={musicMenu}
+                    menu={menu}
                 />
             </>
         )

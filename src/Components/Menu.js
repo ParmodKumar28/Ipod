@@ -9,8 +9,9 @@ export default class Menu extends Component{
     // Rendering Component
     render()
     {
-
+        // Props
         const {menu} = this.props;
+        const musicMenu = menu.musicMenu;
 
         // Menu hide and unhide custom style.
         const menuStyle = {
@@ -18,18 +19,35 @@ export default class Menu extends Component{
             opacity: menu.menuVisible ? 1 : 0,
           };
 
-        let menuHeading = menu.menuItems[menu.activeMenuItem];
+        let menuHeading = menu.menuType === "Music" ? ( musicMenu.activeMenuItem >= 0 ?  musicMenu.menuItems[musicMenu.activeMenuItem] : "Music")  : (menu.activeMenuItem >= 0 ? menu.menuItems[menu.activeMenuItem] : "iPod.js");
 
-        // Returnning JSX
+        // Returning JSX
         return (
             <>
             <div className={styles.menuContainer} style={menuStyle}>
-            <h2>{menu.activeMenuItem >= 0 ? menuHeading : "iPod.js"}</h2>
+            <h2>{menuHeading}</h2>
             <ul className={styles.menu}>
-                {menu.menuItems.map((item, i) => 
-                <MenuItem key={i} item={item} activeMenuItem={menu.activeMenuItem} index={i}/>
-                )}
+            {menu.menuType === "Music"
+            ? musicMenu.menuItems.map((item, i) => ( 
+              <MenuItem
+                key={i}
+                item={item}
+                activeMenuItem={musicMenu.activeMenuItem}
+                index={i}
+              />
+            ))
+            : menu.menuItems.map((item, i) => ( 
+              <MenuItem
+                key={i}
+                item={item}
+                activeMenuItem={menu.activeMenuItem}
+                index={i}
+              />
+            ))}
             </ul>
+            {menu.menuType === "Music" && (
+            <p>Back Main Menu <img src="https://cdn-icons-png.flaticon.com/128/4211/4211379.png" alt="icon" className={styles.back}/> Press</p>
+            )}
             </div>
             </>
         )
