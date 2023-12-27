@@ -141,40 +141,40 @@ class App extends Component{
   };
   
 
-// Handling next button click here.
-handleNextBtn = () => {
-  const { menu, songs } = this.state;
-  const musicMenu = menu.musicMenu;
+  // Handling next button click here.
+  handleNextBtn = () => {
+    const { menu, songs } = this.state;
+    const musicMenu = menu.musicMenu;
+  
+    if (menu.activeMenuItem >= 0 && menu.menuItems[menu.activeMenuItem] === "Coverflow") {
+      const { coverflow } = this.state;
+      coverflow.activeWallpaper = coverflow.activeWallpaper < coverflow.wallpapers.length - 1
+        ? coverflow.activeWallpaper + 1
+        : coverflow.activeWallpaper;
+      this.setState({ coverflow });
+    }
+  
+    if (menu.menuType === "Music" && musicMenu.selectedMenuItem.menuItem === "All Songs") {
+      const nextIndex = (songs.currentSongIndex + 1) % songs.allSongs.length;
+      songs.currentSongIndex = nextIndex;
+      this.setState({ songs });
+    }
+  };
 
-  if (menu.activeMenuItem >= 0 && menu.menuItems[menu.activeMenuItem] === "Coverflow") {
-    const { coverflow } = this.state;
-    coverflow.activeWallpaper = coverflow.activeWallpaper < coverflow.wallpapers.length - 1
-      ? coverflow.activeWallpaper + 1
-      : coverflow.activeWallpaper;
-    this.setState({ coverflow });
-  }
-
-  if (menu.menuType === "Music" && musicMenu.selectedMenuItem.menuItem === "All Songs") {
-    const nextIndex = (songs.currentSongIndex + 1) % songs.allSongs.length;
-    songs.currentSongIndex = nextIndex;
-    this.setState({ songs });
-  }
-};
-
-// Function to play/pause the audio
-togglePlayPause = () => {
-  const { menu, songs } = this.state;
-  if(menu.musicMenu.selectedMenuItem.menuItem === "All Songs")
-  {
-    songs.isPlaying = !songs.isPlaying;
-    this.setState({ songs });
-  }
-};
+  // Function to play/pause the audio
+  togglePlayPause = () => {
+    const { menu, songs } = this.state;
+    if(menu.musicMenu.selectedMenuItem.menuItem === "All Songs")
+    {
+      songs.isPlaying = !songs.isPlaying;
+      this.setState({ songs });
+    }
+  };
 
   // Calling render function here.
   render()
   {
-    const {menu,coverflow, songs, togglePlayPause} = this.state;
+    const {menu,coverflow, songs} = this.state;
 
     // Returning Jsx
     return (
