@@ -1,0 +1,50 @@
+.coverflowContainer{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    /* background-color: aliceblue; */
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f5f5f5;
+}
+
+.heading{
+    color: white;
+    background-color: #555;
+    text-align: center;
+    margin: 6px 0 6px 0;
+}
+
+.wallpapersContainer{
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+}
+
+.wallpaper{
+    height: 6rem;
+    width: 6rem;
+    margin-bottom: 6px;
+}
+
+.active{
+    border: 2.6px solid skyblue;
+}
+
+.coverflowContainer::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar */
+}
+
+.coverflowContainer::-webkit-scrollbar-track {
+    background: #f5f5f5; /* Color of the tracking area */
+}
+
+.coverflowContainer::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scroll thumb */
+    border-radius: 10px; /* Radius for the scroll thumb */
+}
+
+.coverflowContainer::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the scroll thumb on hover */
+}

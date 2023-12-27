@@ -6,4 +6,5 @@
     background: url("../Assets/Wallpapers/wallpaper-8.avif");
     background-position: center;
     background-size: cover;
+    position: relative;
 }
