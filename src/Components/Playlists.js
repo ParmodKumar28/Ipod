@@ -19,7 +19,7 @@ export default class Playlists extends Component{
         const {selectedMenuItem} = this.props;
         const {Playlists} = this.state; 
         
-        // Returnning JSX
+        // Returning JSX
         return (
             <>
             <div className={styles.playlistsContainer}>
