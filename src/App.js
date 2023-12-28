@@ -138,6 +138,13 @@ class App extends Component{
         this.setState({ menu });
       }
     }
+
+    if(menu.menuType === "Music" && musicMenu.selectedMenuItem.menuItem === "All Songs" && menu.menuVisible === true)
+    {
+      menu.menuType = "Menu";
+      this.setState({ menu });
+    }
+    
   };
   
 
