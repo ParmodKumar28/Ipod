@@ -5,6 +5,7 @@ This project simulates an iPod interface using React.js, allowing users to navig
 ## Technologies Used
 
 - React.js
+- HTML
 - CSS/SCSS for styling
 - JSX 
 - Javscript
