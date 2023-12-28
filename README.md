@@ -2,8 +2,8 @@
 
 This project simulates an iPod interface using React.js, allowing users to navigate through a menu, access different options, and interact with the content and listen music and you can use coverflow to change wallpaper by navigating the prev and next button in coverflow.
 
-# Live Link:- https://ipod-0vzj.onrender.com
-# Github Repository:- https://github.com/ParmodKumar28/Ipod
+### Live Link:- https://ipod-0vzj.onrender.com
+### Github Repository:- https://github.com/ParmodKumar28/Ipod
 
 ## Technologies Used
 
