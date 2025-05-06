@@ -1,5 +1,5 @@
 // Imports
-import React, { Component } from "react";
+import { Component } from "react";
 import styles from "../Styles/all-songs.module.css"
 
 // Class component for all songs feature is here to play songs.
@@ -30,7 +30,7 @@ componentDidUpdate(prevProps) {
     return (
         <div className={styles.AllSongsContainer}>
           {/* Song Image */}
-          <img src={currentSong.imageUrl} alt="Song" />
+          <img className={`${songs.isPlaying ? styles.songPlaying : ''} ${styles.songImage}`} src={currentSong.imageUrl} alt="Song" />
 
           {/* Song Title and Artist Name */}
           <div>

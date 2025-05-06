@@ -12,15 +12,7 @@
     border-radius: 6px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
-  .AllSongsContainer img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 50%;
-    margin-bottom: 20px;
-  }
-  
+
   .AllSongsContainer h3 {
     margin: 5px 0;
     font-size: 1.5em;
@@ -35,5 +27,30 @@
   .AllSongsContainer audio {
     width: 100%;
     margin-top: 20px;
+  }
+
+  .songImage{
+    width: 100px;
+    height: 100px;
+    object-fit: fill;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    padding: 2px;
+  }
+  .songPlaying {
+    animation: musicImageRotate 10s linear infinite;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid black;
+  }
+
+  @keyframes musicImageRotate {
+    0%{
+      transform: rotate(0deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
   }
   
